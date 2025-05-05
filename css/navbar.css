@@ -1,0 +1,263 @@
+/* ----------------------------- */
+/* --- Header Positioning Context --- */
+/* ----------------------------- */
+header {
+    position: relative; /* Needed for mobile menu positioning */
+}
+
+
+/* ----------------------------- */
+/* --- Navbar Base Styles ---- */
+/* ----------------------------- */
+#navbar-container {
+    background-color: var(--navbar-bg-color);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    box-shadow: var(--navbar-shadow);
+    padding: 0.75rem 1rem;
+    /* --- Fixed Positioning --- */
+    position: fixed;  /* Changed from sticky to fixed */
+    top: 0;           /* Stick to the very top */
+    left: 0;
+    width: 100%;      /* Take full width */
+    z-index: 1000;    /* High z-index to stay on top */
+    /* --- End Fixed Positioning --- */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add padding to the body to prevent content from being hidden *under* the fixed navbar */
+/* This should ideally be in style.css, but placing here for direct context */
+body {
+    padding-top: var(--navbar-height, 70px); /* Adjust height value if needed */
+    /* Example variable definition (can be placed in :root in style.css) */
+    /* --navbar-height: 70px; */
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+}
+
+/* ----------------------------- */
+/* --- Logo ------------------ */
+/* ----------------------------- */
+.navbar-logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    margin-right: 1.5rem;
+}
+.navbar-logo:hover {
+    color: var(--accent-darker-color);
+    text-decoration: none;
+}
+
+/* ----------------------------- */
+/* --- Navigation Links ------ */
+/* ----------------------------- */
+.navbar-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+    margin: 0 auto; /* Center the links block */
+    padding: 0;
+}
+
+/* General Link Styling */
+.navbar-links li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.6rem 0.2rem;
+    position: relative;
+    transition: color 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    white-space: nowrap;
+}
+.navbar-links li a i {
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+/* Underline effect for non-button links (still applies on hover/focus) */
+.navbar-links li a:not(.nav-link-donate)::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent-color);
+    transition: width 0.3s ease-in-out;
+}
+
+/* Hover/Focus for non-button links - REMOVED .active state */
+.navbar-links li a:not(.nav-link-donate):hover,
+.navbar-links li a:not(.nav-link-donate):focus {
+    color: var(--accent-color);
+    text-decoration: none;
+    outline: none;
+}
+.navbar-links li a:not(.nav-link-donate):hover::after,
+.navbar-links li a:not(.nav-link-donate):focus::after {
+    width: 100%; /* Show underline on hover/focus */
+}
+/* REMOVED active state styles */
+/*
+.navbar-links li a.active:not(.nav-link-donate) { ... }
+.navbar-links li a.active:not(.nav-link-donate)::after { ... }
+*/
+
+
+/* Donate Link Styling */
+.nav-link-donate {
+    background-color: var(--donate-bg-color);
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+    border: 1px solid var(--donate-border-color);
+    font-weight: 600 !important;
+    margin: -0.5rem 0;
+    color: var(--accent-color) !important;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.nav-link-donate::after { display: none; }
+.nav-link-donate:hover,
+.nav-link-donate:focus {
+    background-color: var(--donate-hover-bg-color);
+    color: var(--accent-darker-color) !important;
+    text-decoration: none;
+    border-color: var(--donate-hover-border-color);
+}
+body.dark-mode .nav-link-donate:hover,
+body.dark-mode .nav-link-donate:focus {
+     color: var(--accent-color) !important;
+}
+
+
+/* ----------------------------- */
+/* --- Right Side Items ------ */
+/* ----------------------------- */
+.navbar-right-items {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 1.5rem;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+    background: none; border: none;
+    color: var(--text-color);
+    font-size: 1.3rem;
+    cursor: pointer; padding: 0.3rem; line-height: 1;
+    transition: color 0.2s ease;
+}
+.theme-toggle-button:hover { color: var(--accent-color); }
+
+/* Mobile Menu Toggle Container/Button */
+.navbar-toggle-container { display: none; } /* Hidden on desktop */
+.navbar-toggle {
+    font-size: 1.8rem; color: var(--text-color);
+    background: transparent; border: none; cursor: pointer;
+    padding: 0.25rem; line-height: 1; transition: color 0.2s ease;
+}
+.navbar-toggle:hover { color: var(--accent-color); }
+
+
+/* --- Mobile Menu Container (created by JS) --- */
+#mobile-menu-container {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    position: fixed; /* Changed to fixed */
+    top: var(--navbar-height, 70px); /* Position below the fixed navbar */
+    left: 0;
+    background-color: var(--navbar-bg-color);
+    padding: 0.5rem 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, border-top 0.3s ease;
+    z-index: 999; /* Below navbar container */
+    max-height: calc(100vh - var(--navbar-height, 70px)); /* Prevent overflow */
+    overflow-y: auto; /* Allow scrolling if needed */
+}
+
+body.dark-mode #mobile-menu-container {
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Toggled by JS */
+#mobile-menu-container.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#mobile-menu-container ul { list-style: none; padding: 0; margin: 0; width: 100%; }
+#mobile-menu-container li { width: 100%; }
+#mobile-menu-container li a {
+    padding: 0.9rem 1.5rem; display: flex; align-items: center; gap: 0.8em;
+    width: 100%; border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--text-color); text-decoration: none; font-weight: 500; font-size: 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+#mobile-menu-container li a i { font-size: 1em; width: 1.2em; text-align: center; }
+body.dark-mode #mobile-menu-container li a { border-bottom: 1px solid rgba(255,255,255,0.1); }
+#mobile-menu-container li:last-child a { border-bottom: none; }
+
+/* REMOVED .active state for mobile menu links */
+#mobile-menu-container li a:hover,
+#mobile-menu-container li a:focus {
+    background-color: var(--background-color);
+    color: var(--accent-color);
+}
+/*
+#mobile-menu-container li a.active { ... }
+*/
+
+#mobile-menu-container li a.nav-link-donate {
+    background-color: transparent; border: none; font-weight: 500;
+    color: var(--text-color); padding: 0.9rem 1.5rem;
+}
+#mobile-menu-container li a.nav-link-donate:hover,
+#mobile-menu-container li a.nav-link-donate:focus {
+     color: var(--accent-color);
+     background-color: var(--background-color);
+}
+/* REMOVED .active state for mobile donate link */
+/*
+#mobile-menu-container li a.nav-link-donate.active { ... }
+*/
+
+
+/* ----------------------------- */
+/* --- Navbar Responsive ----- */
+/* ----------------------------- */
+@media (max-width: 768px) {
+    nav { padding: 0; }
+    .navbar-logo { margin-right: auto; }
+    .navbar-links { display: none; }
+    .navbar-right-items { gap: 0.5rem; margin-left: auto; }
+    .theme-toggle-button { font-size: 1.2rem; }
+    .navbar-toggle-container { display: block; } /* Show burger */
+}
+@media (min-width: 769px) and (max-width: 992px) {
+    .navbar-links { gap: 1.2rem; }
+    .navbar-right-items { gap: 0.8rem; }
+}

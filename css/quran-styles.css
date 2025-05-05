@@ -1,0 +1,318 @@
+/* --- Quran Page Specific Styles --- */
+
+body.page-quran {
+    /* Optional: Override body background if needed */
+    /* background-color: var(--background-color); */
+}
+
+/* Main layout using CSS Grid */
+.main-quran {
+    display: grid;
+    /* Define columns: Sidebar width, Content area takes remaining space */
+    grid-template-columns: minmax(250px, 1fr) 3fr; /* Adjust sidebar width as needed */
+    gap: 2rem; /* Gap between sidebar and content */
+    max-width: 1400px; /* Max overall width */
+    margin: 2rem auto; /* Centering and top/bottom margin */
+    padding: 0 1rem; /* Padding on the sides */
+    min-height: calc(100vh - var(--navbar-height) - 4rem); /* Try to fill height */
+}
+
+/* --- Sidebar Styling --- */
+.quran-sidebar {
+    background-color: var(--section-bg-color); /* Use theme variable */
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--section-shadow);
+    height: fit-content; /* Adjust height based on content */
+    max-height: calc(100vh - var(--navbar-height) - 6rem); /* Max height with padding */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.quran-sidebar h2 {
+    font-size: 1.4em;
+    color: var(--heading-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.5rem;
+}
+
+/* Surah Search */
+.search-surah-container {
+    display: flex;
+    margin-bottom: 1rem;
+    position: relative;
+}
+#surah-search {
+    flex-grow: 1;
+    padding: 0.6rem 2.5rem 0.6rem 0.8rem; /* Padding for text and clear button */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--background-color); /* Match body bg */
+    color: var(--text-color);
+    font-size: 0.9em;
+    outline: none;
+    transition: border-color 0.2s;
+}
+#surah-search:focus {
+    border-color: var(--accent-color);
+}
+#clear-search {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 5px;
+    display: none; /* Hidden by default, shown by JS */
+    line-height: 1;
+}
+#clear-search:hover {
+    color: var(--text-color);
+}
+#surah-search:not(:placeholder-shown) + #clear-search {
+    display: block; /* Show clear button when input has text */
+}
+
+
+/* Surah List Container */
+.surah-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto; /* Enable scrolling for the list */
+    flex-grow: 1; /* Allow list to take remaining space */
+}
+/* Style for individual surah links (added by JS) */
+.surah-list-item {
+    display: block;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border: 1px solid transparent; /* Prepare for active state */
+    cursor: pointer; /* Indicate clickable */
+}
+.surah-list-item:hover {
+    background-color: var(--donate-bg-color); /* Use subtle highlight color */
+    color: var(--accent-color);
+}
+.surah-list-item.active {
+    background-color: var(--accent-color);
+    color: var(--dark-background-color, #121212); /* Dark text on light accent */
+    font-weight: 600;
+    border-color: var(--accent-darker-color);
+}
+body:not(.dark-mode) .surah-list-item.active {
+     color: #ffffff; /* White text on accent */
+}
+
+
+/* Surah details (number, name, translation) inside the link */
+.surah-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.surah-name-en {
+    font-weight: 500;
+}
+.surah-name-ar {
+    font-family: 'Amiri', serif; /* Use Arabic font */
+    font-size: 1.2em; /* Slightly larger Arabic name */
+}
+.surah-number, .surah-verses {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    background-color: var(--background-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 5px; /* Space */
+}
+.surah-list-item.active .surah-number,
+.surah-list-item.active .surah-verses {
+     color: var(--accent-color); /* Match active text */
+     background-color: var(--dark-background-color, #121212); /* Match active bg */
+}
+body:not(.dark-mode) .surah-list-item.active .surah-number,
+body:not(.dark-mode) .surah-list-item.active .surah-verses {
+     color: var(--accent-color);
+     background-color: #ffffff;
+}
+
+
+/* --- Content Area Styling --- */
+.quran-content {
+    background-color: var(--section-bg-color);
+    border-radius: 8px;
+    padding: 1.5rem 2rem; /* More horizontal padding */
+    border: 1px solid var(--border-color);
+    box-shadow: var(--section-shadow);
+    overflow-y: auto; /* Scroll content if needed */
+    max-height: calc(100vh - var(--navbar-height) - 6rem); /* Max height */
+}
+
+/* Placeholder styling */
+.quran-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    text-align: center;
+    color: var(--text-muted);
+}
+.quran-placeholder i {
+    font-size: 4em; /* Larger icon */
+    margin-bottom: 1rem;
+    color: var(--border-color); /* Muted icon color */
+}
+.quran-placeholder p {
+    font-size: 1.1em;
+}
+
+
+/* Container for displaying Surah details */
+#surah-display-container {
+    /* Styles for Ayahs will be added here */
+}
+
+/* Surah Header (inside display container) */
+.surah-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.surah-header h3 {
+    font-size: 1.8em;
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+}
+.surah-header .arabic-name {
+    font-family: 'Amiri', serif;
+    font-size: 2.2em; /* Large Arabic name */
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+.surah-header .bismillah {
+    font-family: 'Amiri', serif;
+    font-size: 1.6em;
+    margin-top: 1rem;
+    color: var(--text-color);
+}
+.surah-header p {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+
+/* Ayah (Verse) Styling */
+.ayah-container {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    line-height: 1.8; /* Adjust line height for readability */
+}
+.ayah-container:last-child {
+     border-bottom: none;
+}
+
+.ayah-number {
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-right: 0.5em;
+    background-color: var(--donate-bg-color); /* Subtle background */
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.ayah-text-ar {
+    font-family: 'Amiri', serif; /* Arabic font */
+    font-size: 1.8em; /* Larger Arabic text */
+    line-height: 2;   /* More line spacing for Arabic */
+    text-align: right; /* Right-align Arabic */
+    margin-bottom: 0.5rem;
+    direction: rtl; /* Right-to-left direction */
+    color: var(--text-color);
+}
+
+.ayah-text-en {
+    font-size: 1.1em;
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Loading/Error text */
+.loading-text, .error-text {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 1rem;
+}
+.error-text {
+    color: #ff4d4d; /* Red for errors */
+}
+
+
+/* --- Optional Controls --- */
+.quran-controls {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    display: flex; /* Initially hidden by inline style */
+    gap: 1rem;
+    align-items: center;
+}
+.quran-controls label {
+    font-weight: 500;
+}
+.quran-controls select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .main-quran {
+        grid-template-columns: minmax(200px, 1fr) 3fr; /* Narrower sidebar */
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-quran {
+        grid-template-columns: 1fr; /* Stack sidebar and content */
+        margin-top: 1rem;
+    }
+    .quran-sidebar {
+        max-height: 300px; /* Limit sidebar height when stacked */
+        margin-bottom: 1rem; /* Add space below sidebar */
+    }
+    .quran-content {
+        max-height: none; /* Remove max height for content */
+        padding: 1rem 1.5rem;
+    }
+    .ayah-text-ar { font-size: 1.6em; }
+    .ayah-text-en { font-size: 1em; }
+}
+@media (max-width: 480px) {
+    .surah-list-item { padding: 0.6rem 0.8rem; }
+    .surah-name-ar { font-size: 1.1em; }
+    .ayah-text-ar { font-size: 1.4em; }
+    .surah-header .arabic-name { font-size: 1.8em; }
+    .surah-header .bismillah { font-size: 1.4em; }
+}

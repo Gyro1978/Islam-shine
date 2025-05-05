@@ -1,0 +1,178 @@
+/* --- 404 Page Specific Styles --- */
+
+body.page-404 {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden; /* Prevent scrollbars */
+    position: relative;
+    background-color: var(--background-color); /* Apply theme bg to body */
+}
+
+body.page-404 header,
+body.page-404 .main-404 {
+    position: relative;
+    z-index: 10; /* Above snow and blurred container */
+}
+/* Ensure header backdrop doesn't conflict if it also uses blur */
+body.page-404 header #navbar-container {
+    z-index: 1001; /* Ensure navbar itself is on top */
+}
+
+
+.main-404 {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: transparent; /* Main area is transparent */
+}
+
+/* Container for the 404 message content */
+.container-404 {
+    max-width: 600px;
+    padding: clamp(4rem, 12vw, 7rem); /* Add padding inside the container */
+    border-radius: 12px; /* Rounded corners */
+    position: relative; /* Needed for stacking */
+    z-index: 5; /* Above snow (z-index 1), below header (z-index 10) */
+
+    /* Background with transparency */
+    background-color: rgba(44, 47, 51, 0.6); /* Example: Dark grey, semi-transparent */
+    /* Fallback for dark mode */
+    /* Using a fixed color might be better than variables here for consistency */
+
+    /* Backdrop Blur Effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Safari prefix */
+
+    /* Optional: Add a subtle border */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* Adjust background/border for light theme */
+body:not(.dark-mode) .container-404 {
+    background-color: rgba(255, 255, 255, 0.6); /* Light, semi-transparent */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+/* Heading Styles within the container */
+.container-404 h1 {
+    font-size: clamp(6rem, 20vw, 10rem);
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    /* Remove text-shadow if blur makes it look odd, or adjust */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+body.dark-mode .container-404 h1 {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Darker shadow for dark */
+}
+
+
+.container-404 h2 {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+}
+
+.container-404 p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    /* Adjust text color if needed for contrast against blur */
+    body:not(.dark-mode) & {
+        color: #333; /* Darker text on light blurred bg */
+    }
+    body.dark-mode & {
+         color: #eee; /* Lighter text on dark blurred bg */
+    }
+    margin-bottom: 2rem;
+}
+
+/* Home Button Styling */
+.button-home {
+    display: inline-flex; align-items: center; gap: 0.5em;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--accent-color);
+    color: #ffffff;
+    text-decoration: none; font-weight: 500; border-radius: 8px;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+body.dark-mode .button-home {
+    color: var(--dark-background-color);
+}
+
+.button-home i { font-size: 1em; }
+
+.button-home:hover,
+.button-home:focus {
+    background-color: var(--accent-darker-color);
+    text-decoration: none; transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); outline: none;
+}
+
+
+/* --- Snow Animation (Example Project Method) --- */
+
+/* Container is fixed */
+.snow { /* Matches class on the container div */
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 1; /* Behind content and blurred container */
+    overflow: hidden;
+}
+
+/* Base style for flakes created by JS */
+.snow-flake {
+    position: absolute;
+    top: -10vh; /* Start above the screen */
+    background-color: rgba(255, 255, 255, 0.7); /* Use rgba for slight transparency */
+    border-radius: 50%;
+    animation-name: snowfall-final; /* Link to animation */
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform, opacity; /* Performance hint */
+    /* --drift-offset defined by JS */
+}
+
+/* Animation keyframes */
+@keyframes snowfall-final {
+    0% {
+        transform: translateY(0) translateX(0); /* Start Y, neutral X */
+        opacity: 0; /* Start invisible to fade in */
+    }
+    10% {
+        opacity: 1; /* Fade in quickly */
+    }
+    90% {
+        opacity: 1; /* Stay visible */
+    }
+    100% {
+        /* End below screen, applying horizontal drift */
+        transform: translateY(110vh) translateX(var(--drift-offset, 0px));
+        opacity: 0; /* Fade out */
+    }
+}
+
+/* --- Styling Layers with :nth-child --- */
+.snow-flake:nth-child(5n)    { width: 3px; height: 3px; animation-duration: 6s; opacity: 0; }
+.snow-flake:nth-child(5n + 1) { width: 4px; height: 4px; animation-duration: 7s; opacity: 0; }
+.snow-flake:nth-child(5n + 2) { width: 5px; height: 5px; animation-duration: 8s; opacity: 0; }
+.snow-flake:nth-child(5n + 3) { width: 6px; height: 6px; animation-duration: 9s; opacity: 0; }
+.snow-flake:nth-child(5n + 4) { width: 7px; height: 7px; animation-duration: 10s; opacity: 0; }
+
+
+/* --- Responsive 404 --- */
+@media (max-width: 576px) {
+    .container-404 {
+        padding: clamp(1.5rem, 5vw, 2.5rem); /* Adjust padding */
+    }
+    .container-404 h1 { font-size: clamp(5rem, 18vw, 8rem); }
+    .container-404 h2 { font-size: clamp(1.3rem, 4.5vw, 1.8rem); }
+    .container-404 p { font-size: 1rem; }
+    .button-home { padding: 0.7rem 1.2rem; }
+}

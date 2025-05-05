@@ -1,0 +1,134 @@
+/* --- Ahadith Section Styles --- */
+/* Targeting specific IDs and classes to avoid conflicts */
+
+section#ahadith {
+    /* Inherits basic section styling (padding, margin-bottom, etc.) from style.css */
+    /* Add specific overrides if needed, e.g. different background */
+    /* background-color: var(--section-bg-color); */ /* Example */
+}
+
+section#ahadith h2 {
+    /* Inherits h2 styling from style.css */
+    text-align: center;
+    margin-bottom: 2rem;
+    /* Specific overrides for this h2 if necessary */
+    /* color: var(--accent-color); */
+}
+
+/* Container to constrain hadith content width */
+.ahadith-container {
+    max-width: 800px; /* Adjust as needed */
+    margin: 0 auto; /* Center */
+}
+
+/* Box displaying the hadith text and reference */
+#hadith-display.hadith-content { /* Specific targeting */
+    background-color: var(--background-color); /* Use theme background, slightly different from section */
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    min-height: 150px; /* Minimum height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center loading text */
+    transition: background-color 0.3s ease;
+}
+
+/* Paragraph containing the hadith text */
+#hadith-display .hadith-text {
+    font-size: 1.15em;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    font-style: italic;
+    text-align: left; /* Ensure text starts left */
+}
+
+/* Paragraph containing the reference */
+#hadith-display .hadith-reference {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    text-align: right; /* Align reference right */
+    margin-top: 1rem;
+    font-style: normal;
+}
+#hadith-display .hadith-reference strong {
+     color: var(--text-color); /* Make book name slightly darker */
+     font-weight: 600;
+}
+
+/* Loading/Error text styling within the hadith display */
+#hadith-display .loading-text,
+#hadith-display .error-text {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 1rem;
+    font-style: italic; /* Italicize these messages */
+}
+#hadith-display .error-text {
+    color: #ff4d4d;
+    font-style: normal;
+    font-weight: 500;
+}
+
+/* Container for controls below the hadith */
+.hadith-controls {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Reusable Button Style for Ahadith section - Apply to #random-hadith-button */
+.hadith-controls .button-style { /* Target buttons within this section */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.7rem 1.4rem;
+    background-color: var(--accent-color);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    /* NO transform on hover */
+}
+body.dark-mode .hadith-controls .button-style {
+     color: var(--dark-background-color);
+}
+
+.hadith-controls .button-style i {
+    font-size: 0.9em;
+}
+
+.hadith-controls .button-style:hover {
+    background-color: var(--accent-darker-color);
+    /* No transform on hover */
+}
+.hadith-controls .button-style:active {
+    transform: scale(0.98); /* Keep press effect */
+}
+.hadith-controls .button-style:disabled {
+    background-color: var(--text-muted);
+    cursor: not-allowed;
+    transform: none; /* Disable active transform when disabled */
+}
+
+
+/* --- Responsive Adjustments for Ahadith Section --- */
+@media (max-width: 768px) {
+    #hadith-display.hadith-content {
+        padding: 1rem 1.5rem;
+    }
+     #hadith-display .hadith-text {
+         font-size: 1.1em;
+     }
+}
+@media (max-width: 480px) {
+    section#ahadith { padding: 1.5rem 1rem; }
+    #hadith-display.hadith-content { padding: 1rem; }
+    #hadith-display .hadith-text { font-size: 1em; }
+    #hadith-display .hadith-reference { font-size: 0.85em; }
+    .hadith-controls .button-style { padding: 0.6rem 1.2rem; font-size: 0.95em;}
+}
