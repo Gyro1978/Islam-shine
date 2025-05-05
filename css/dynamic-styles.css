@@ -2,199 +2,202 @@
 /* -- Prayer Times Section --- */
 /* ----------------------------- */
 #prayer-times-section {
-    /* Background handled by weather classes */
-    padding: clamp(1.5rem, 4vw, 2.5rem); /* Responsive padding */
-    text-align: center;
-    border-radius: 12px; /* Match section style */
-    position: relative; /* Needed for pseudo-elements */
-    overflow: hidden; /* Contain pseudo-elements */
-    transition: background 1.5s cubic-bezier(0.4, 0, 0.2, 1), color 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother transition */
+    padding: clamp(1.5rem, 4vw, 2.5rem); text-align: center; border-radius: 12px;
+    position: relative; overflow: hidden; /* Keep overflow hidden */
+    transition: background 1.5s cubic-bezier(0.4, 0, 0.2, 1), color 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--section-bg-color); color: var(--text-color);
+    min-height: 300px; /* Ensure minimum height for content visibility */
 }
-
 #prayer-times-section h2 {
-    margin-bottom: 2rem;
-    position: relative; /* Keep above background effects */
-    z-index: 2;
+    margin-bottom: 2rem; position: relative; z-index: 2;
+    color: var(--heading-color); transition: color 1.5s ease;
 }
-
 #prayer-times-container {
-    display: grid;
-    /* More flexible grid: fit items >= 110px, max 1fr */
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: clamp(1rem, 3vw, 1.5rem); /* Responsive gap */
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-    position: relative; /* Keep above background effects */
-    z-index: 2;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: clamp(1rem, 3vw, 1.5rem); margin: 1.5rem auto 2rem auto;
+    position: relative; z-index: 2;
+    transition: filter 0.3s ease, opacity 0.3s ease; /* Add filter transition */
 }
-
+/* Base Prayer Time Item */
 .prayer-time-item {
-    background-color: rgba(255, 255, 255, 0.85); /* Slightly more opaque */
-    padding: 1.2rem 0.8rem;
-    border-radius: 10px; /* Match section rounding */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease, color 0.3s ease;
-    border: 1px solid transparent; /* Prepare for highlight border */
+    background-color: var(--card-bg-color, rgba(255, 255, 255, 0.85));
+    padding: 1.2rem 0.8rem; border-radius: 10px;
+    box-shadow: var(--card-shadow, 0 2px 8px rgba(0, 0, 0, 0.1));
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    transition: box-shadow 0.25s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    border: 1px solid transparent;
 }
-
-.prayer-time-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
-}
-
-/* Icons (Using Font Awesome classes from HTML) */
-.prayer-time-item i.fas { /* Target Font Awesome icons specifically */
-    font-size: 1.9rem; /* Slightly larger icons */
-    color: #008080; /* Use accent color */
-    margin-bottom: 0.4rem;
-    line-height: 1; /* Ensure icon doesn't add extra space */
-    transition: color 0.3s ease;
-}
-
-.prayer-name {
-    font-weight: 600;
-    font-size: 0.9rem; /* Slightly smaller name */
-    color: #343a40;
-    text-transform: uppercase; /* Uppercase for style */
-    letter-spacing: 0.5px;
-}
-
-.prayer-time {
-    font-size: 1.2rem;
-    font-weight: 700; /* Bold time */
-    color: #212529; /* Darker time */
-    line-height: 1.2;
-}
-
+/* Icons */
+.prayer-time-item i.fas { font-size: 1.9rem; color: var(--card-icon-color, #008080); margin-bottom: 0.4rem; line-height: 1; transition: color 0.3s ease; }
+/* Prayer name */
+.prayer-name { font-weight: 600; font-size: 0.9rem; color: var(--card-text-color, #343a40); text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s ease; }
+/* Prayer time */
+.prayer-time { font-size: 1.2rem; font-weight: 700; color: var(--card-time-color, #212529); line-height: 1.2; transition: color 0.3s ease; }
 /* Highlight next prayer */
-.prayer-time-item.next-prayer {
-    background-color: #008080; /* Use accent color for background */
-    color: #ffffff; /* White text */
-    transform: translateY(-2px) scale(1.03); /* Slight lift and scale */
-    box-shadow: 0 6px 15px rgba(0, 128, 128, 0.3);
-}
-
-.prayer-time-item.next-prayer .prayer-name,
-.prayer-time-item.next-prayer .prayer-time,
-.prayer-time-item.next-prayer i.fas {
-    color: #ffffff; /* Ensure all elements inside are white */
-}
-
+.prayer-time-item.next-prayer { background-color: var(--highlight-bg, #008080); color: var(--highlight-text, #ffffff); box-shadow: 0 6px 15px var(--highlight-shadow, rgba(0, 128, 128, 0.3)); border-color: var(--highlight-bg, #008080); transform: none; }
+.prayer-time-item.next-prayer .prayer-name, .prayer-time-item.next-prayer .prayer-time, .prayer-time-item.next-prayer i.fas { color: var(--highlight-text, #ffffff); }
 /* Next Prayer Info (Countdown) */
 #next-prayer-info {
-    margin-top: 2rem;
-    font-size: 1.15rem;
-    font-weight: 500;
-    position: relative;
-    z-index: 2;
-    transition: color 1.5s ease; /* Sync color transition */
+    margin-top: 2rem; font-size: 1.15rem; font-weight: 500;
+    position: relative; z-index: 2; color: var(--text-color);
+    transition: opacity 0.3s ease, color 1.5s ease; min-height: 1.2em;
 }
+#next-prayer-info strong { color: var(--accent-color); font-weight: 700; transition: color 0.3s ease; }
+body.dark-mode #next-prayer-info strong { color: var(--dark-countdown-highlight, var(--accent-color)); }
 
-#next-prayer-info strong {
-    color: #008080; /* Use accent color */
-    font-weight: 700;
-}
-
-
-/* ----------------------------- */
 /* --- Dynamic Backgrounds --- */
-/* ----------------------------- */
-.weather-dynamic-bg {
-    color: #212529; /* Default dark text */
-}
+/* ... Weather styles remain unchanged ... */
+.weather-dynamic-bg { color: #212529; }
+.weather-day { background: linear-gradient(170deg, #a1c4fd 0%, #c2e9fb 100%); }
+.weather-day h2, .weather-day #next-prayer-info, .weather-day #location-display { color: var(--heading-color); }
+.weather-day #next-prayer-info strong { color: var(--accent-color); }
+.weather-night { background: linear-gradient(170deg, var(--night-gradient-start, #0d1b2a) 0%, var(--night-gradient-mid, #1b263b) 40%, var(--night-gradient-end, #415a77) 100%); --heading-color: var(--night-heading-color, #ffffff); --text-color: var(--night-text-color, #e0e0e0); --text-muted: var(--night-text-color, #e0e0e0); --highlight-bg: var(--night-highlight-bg, #a1c4fd); --highlight-text: var(--night-highlight-text, #0d1b2a); --highlight-shadow: var(--night-highlight-shadow, rgba(161, 196, 253, 0.3)); --card-bg-color: var(--night-card-bg, rgba(65, 90, 119, 0.7)); --card-icon-color: var(--night-card-icon-color, #c2e9fb); --card-text-color: var(--night-card-text-color, #f0f0f0); --card-time-color: var(--night-card-time-color, #ffffff); --card-shadow: 0 2px 8px var(--night-card-shadow, rgba(0, 0, 0, 0.3)); --border-color: rgba(255, 255, 255, 0.2); }
+.weather-night #next-prayer-info strong { color: var(--night-countdown-highlight, #a1c4fd); }
+.weather-night::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(170deg, rgba(13, 27, 42, 0.1) 0%, rgba(27, 38, 59, 0.2) 40%, rgba(65, 90, 119, 0.3) 100%); animation: subtleShift 60s ease-in-out infinite alternate; z-index: 0; opacity: 0.5; }
+@keyframes subtleShift { from { transform: translateY(-2%); } to { transform: translateY(2%); } }
+.weather-rain { background: linear-gradient(170deg, #6c757d 0%, #adb5bd 100%); --heading-color: #ffffff; --text-color: #f0f0f0; }
+.weather-snow { background: linear-gradient(170deg, #e9ecef 0%, #f8f9fa 100%); --heading-color: #343a40; --text-color: #495057; }
 
-/* Base state (can be default day) */
-.weather-day {
-    background: linear-gradient(170deg, #a1c4fd 0%, #c2e9fb 100%); /* Lighter, softer blue gradient */
+/* --- Prayer Times Location Error Overlay --- */
+#prayer-times-section .location-error-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    /* Lighter background to allow content visibility */
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px); /* Add blur to obscure content */
+    -webkit-backdrop-filter: blur(4px);
+    color: white; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 1rem; border-radius: 12px;
+    z-index: 20; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    box-sizing: border-box; /* Ensure padding is included in height/width */
 }
-.weather-day h2,
-.weather-day #next-prayer-info {
-     color: #212529; /* Ensure dark text on light background */
+#prayer-times-section.location-error-active .location-error-overlay {
+    opacity: 1; pointer-events: auto;
 }
-
-
-/* Night Time */
-.weather-night {
-    background: linear-gradient(170deg, #0d1b2a 0%, #1b263b 40%, #415a77 100%); /* Deeper blue/gray night */
-    color: #e0e0e0; /* Light gray text for readability */
-}
-.weather-night h2,
-.weather-night #next-prayer-info {
-    color: #ffffff; /* White titles/info on dark background */
-}
-.weather-night #next-prayer-info strong {
-    color: #a1c4fd; /* Lighter blue highlight for night */
-}
-.weather-night .prayer-time-item {
-     background-color: rgba(65, 90, 119, 0.7); /* Darker card background for night */
-     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-.weather-night .prayer-time-item .prayer-name { color: #f0f0f0; }
-.weather-night .prayer-time-item .prayer-time { color: #ffffff; }
-.weather-night .prayer-time-item i.fas { color: #c2e9fb; } /* Lighter icon color */
-
-.weather-night .prayer-time-item.next-prayer {
-    background-color: #a1c4fd; /* Light blue highlight background */
-    box-shadow: 0 6px 15px rgba(161, 196, 253, 0.3);
-}
-.weather-night .prayer-time-item.next-prayer .prayer-name,
-.weather-night .prayer-time-item.next-prayer .prayer-time,
-.weather-night .prayer-time-item.next-prayer i.fas {
-    color: #0d1b2a; /* Dark text on light highlight */
-}
-
-/* --- Subtle Night Effects (Optional - CSS only) --- */
-.weather-night::before {
-    /* Very subtle gradient shift animation */
-    content: '';
+/* Add a close button */
+.location-error-overlay .close-overlay-button {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(170deg, rgba(13, 27, 42, 0.1) 0%, rgba(27, 38, 59, 0.2) 40%, rgba(65, 90, 119, 0.3) 100%);
-    animation: subtleShift 60s ease-in-out infinite alternate;
-    z-index: 0; /* Behind content but above main background */
-    opacity: 0.5;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    transition: color 0.2s ease;
+    z-index: 23; /* Above other overlay content */
 }
-@keyframes subtleShift {
-    from { transform: translateY(-2%); }
-    to { transform: translateY(2%); }
+.location-error-overlay .close-overlay-button:hover {
+    color: white;
+}
+#prayer-times-section .location-error-overlay .error-message {
+    margin-bottom: 0.8rem; font-size: 1.0em; line-height: 1.4; font-weight: 500; max-width: 90%;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Add shadow for readability */
+}
+#prayer-times-section .location-error-overlay .search-container {
+    width: 100%; max-width: 400px; position: relative; margin-top: 0.8rem;
+}
+#prayer-times-section .location-error-overlay .location-search-form {
+    display: flex; gap: 0.5rem; width: 100%; position: relative; z-index: 22;
+}
+#prayer-times-section .location-error-overlay #manual-location-input {
+    flex-grow: 1; padding: 0.7rem 0.9rem; border: 1px solid var(--border-color, #444);
+    border-radius: 5px 0 0 5px; background-color: var(--dark-section-bg-color, #1e1e1e);
+    color: var(--dark-text-color, #e0e0e0); font-size: 0.95em; outline: none;
+    &::-webkit-search-cancel-button{ -webkit-appearance: none; appearance: none; }
+    &::-ms-clear { display: none; width : 0; height: 0; } &::-moz-search-cancel-button { display: none; }
+}
+body:not(.dark-mode) #prayer-times-section .location-error-overlay #manual-location-input {
+    background-color: #fff; color: #333; border: 1px solid #ccc;
+}
+#prayer-times-section .location-error-overlay #manual-location-button {
+    padding: 0.7rem 1.1rem; background-color: var(--accent-color);
+    color: #ffffff; border: none; border-radius: 0 5px 5px 0; cursor: pointer;
+    font-weight: 500; transition: background-color 0.2s ease;
+}
+body.dark-mode #prayer-times-section .location-error-overlay #manual-location-button {
+     color: var(--dark-background-color, #121212);
+}
+#prayer-times-section .location-error-overlay #manual-location-button:hover { background-color: var(--accent-darker-color); }
+
+/* Suggestions Dropdown - Limit Height for 3 items approx */
+#location-suggestions {
+    display: none; position: absolute; top: calc(100% + 4px); left: 0; width: 100%;
+    /* Calculate approximate height for 3 items + borders/padding */
+    max-height: calc((0.8rem * 2 + 1.3em * 1) * 3 + 3px); /* Adjust line-height/padding if needed */
+    overflow-y: auto;
+    background-color: var(--bg-secondary, #2c2f33); border: 1px solid var(--border-color, #444); border-top: none;
+    border-radius: 0 0 6px 6px; z-index: 21; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    scrollbar-width: thin; scrollbar-color: var(--accent-color) var(--bg-tertiary);
+}
+#location-suggestions::-webkit-scrollbar { width: 6px; }
+#location-suggestions::-webkit-scrollbar-track { background: var(--bg-tertiary); border-radius: 3px; }
+#location-suggestions::-webkit-scrollbar-thumb { background-color: var(--accent-color); border-radius: 3px; }
+#location-suggestions button {
+    display: block; width: 100%; padding: 0.8rem 1.1rem; background: none; border: none;
+    border-bottom: 1px solid var(--border-color, #444); color: var(--text-light, #f0f0f0);
+    text-align: left; cursor: pointer; font-size: 0.9em; line-height: 1.3; white-space: normal;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+#location-suggestions button:last-child { border-bottom: none; }
+#location-suggestions button:hover { background-color: var(--accent-blue, #00aeff); color: var(--bg-dark, #1a1a1d); }
+
+/* Keep underlying content visible but blurred/dimmed */
+#prayer-times-section.location-error-active #prayer-times-container,
+#prayer-times-section.location-error-active #next-prayer-info,
+#prayer-times-section.location-error-active #location-display {
+    filter: blur(3px); /* Blur the content */
+    opacity: 0.4;      /* Dim the content */
+    pointer-events: none; /* Prevent interaction with underlying content */
 }
 
-/* --- Weather Effects Placeholders (Rain/Snow) --- */
-/* These usually require JS to add/remove particle elements */
-.weather-rain {
-    background: linear-gradient(170deg, #6c757d 0%, #adb5bd 100%); /* Grayish */
-    /* Add JS-driven rain particles */
-}
-.weather-rain h2, .weather-rain #next-prayer-info { color: #ffffff; }
-/* Style prayer items for rain background */
+/* --- Skeleton Loading Styles --- */
+/* Styles remain unchanged ... */
+#prayer-times-section.loading #prayer-times-container .prayer-time-item, #prayer-times-section.loading #next-prayer-info, #prayer-times-section.loading #location-display { background-color: var(--background-color); color: transparent; border-radius: 8px; position: relative; overflow: hidden; border: none; box-shadow: none; }
+#prayer-times-section.loading #prayer-times-container .prayer-time-item *, #prayer-times-section.loading #next-prayer-info *, #prayer-times-section.loading #location-display * { visibility: hidden; }
+#prayer-times-section.loading #prayer-times-container .prayer-time-item { min-height: 120px; }
+#prayer-times-section.loading #prayer-times-container .prayer-time-item::before { content: ''; display: block; width: 35px; height: 35px; background-color: var(--section-bg-color); border-radius: 50%; margin: 1.2rem auto 0.8rem auto; }
+#prayer-times-section.loading #prayer-times-container .prayer-time-item::after { content: ''; display: block; width: 60%; height: 12px; background-color: var(--section-bg-color); border-radius: 4px; margin: 0 auto 0.6rem auto; }
+#prayer-times-section.loading #prayer-times-container .prayer-time-item span::before { content: ''; display: block; width: 45%; height: 14px; background-color: var(--section-bg-color); border-radius: 4px; margin: 0 auto; }
+#prayer-times-section.loading #next-prayer-info, #prayer-times-section.loading #location-display { height: 1.2em; width: 60%; margin: 0 auto; min-height: 1.2em; }
+#prayer-times-section.loading #next-prayer-info { margin-top: 2rem; }
+#prayer-times-section.loading #location-display { margin-top: 0.5rem; width: 50%; }
+#prayer-times-section.loading #prayer-times-container .prayer-time-item::after, #prayer-times-section.loading #prayer-times-container .prayer-time-item::before, #prayer-times-section.loading #prayer-times-container .prayer-time-item span::before, #prayer-times-section.loading #next-prayer-info, #prayer-times-section.loading #location-display { position: relative; }
+#prayer-times-section.loading #prayer-times-container .prayer-time-item::before, #prayer-times-section.loading #prayer-times-container .prayer-time-item::after, #prayer-times-section.loading #prayer-times-container .prayer-time-item span::before, #prayer-times-section.loading #next-prayer-info::before, #prayer-times-section.loading #location-display::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); animation: skeleton-shimmer 1.5s infinite linear; transform: translateX(-100%); border-radius: inherit; }
+body.dark-mode #prayer-times-section.loading #prayer-times-container .prayer-time-item::before, body.dark-mode #prayer-times-section.loading #prayer-times-container .prayer-time-item::after, body.dark-mode #prayer-times-section.loading #prayer-times-container .prayer-time-item span::before, body.dark-mode #prayer-times-section.loading #next-prayer-info::before, body.dark-mode #prayer-times-section.loading #location-display::before { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); }
+@keyframes skeleton-shimmer { 100% { transform: translateX(100%); } }
 
-.weather-snow {
-    background: linear-gradient(170deg, #e9ecef 0%, #f8f9fa 100%); /* Light gray/white */
-    /* Add JS-driven snow particles */
-}
-.weather-snow h2, .weather-snow #next-prayer-info { color: #343a40; }
-/* Style prayer items for snow background */
 
-/* Important: Real rain/snow animations are complex with pure CSS. */
-/* You'll likely need JavaScript to create and animate multiple */
-/* 'drop' or 'flake' elements for a good effect. */
-
-/* Responsive adjustments for prayer items */
-@media (max-width: 576px) {
-    #prayer-times-container {
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-        gap: 0.8rem;
-    }
-    .prayer-time-item {
-        padding: 1rem 0.5rem;
-        border-radius: 8px;
-    }
-    .prayer-time-item i.fas { font-size: 1.6rem; }
-    .prayer-name { font-size: 0.8rem; }
-    .prayer-time { font-size: 1rem; }
-    #next-prayer-info { font-size: 1rem; }
+/* Location display text below countdown */
+#location-display {
+    font-size: 0.9em;
+    /* Make text more distinct from background */
+    color: var(--text-color); /* Use primary text color */
+    font-weight: 500; /* Slightly bolder */
+    margin-top: 0.5rem; text-align: center;
+    transition: color 1.5s ease, opacity 0.3s ease; z-index: 2;
+    position: relative; min-height: 1.2em;
 }
+/* Ensure distinct color in dark mode too */
+body.dark-mode #location-display { color: var(--dark-text-color, var(--text-light)); }
+/* Make distinct in night mode */
+.weather-night #location-display { color: var(--night-heading-color, #ffffff); font-weight: 500;}
+
+/* Change Location Button */
+#change-location-button {
+    display: inline-block; margin-left: 0.8em; background: none; border: none;
+    color: var(--text-muted); /* Keep button muted */
+    cursor: pointer; font-size: 0.8em; vertical-align: middle;
+    padding: 2px; line-height: 1; transition: color 0.2s ease;
+}
+#change-location-button:hover { color: var(--accent-color); }
+body.dark-mode #location-display #change-location-button { color: var(--dark-text-muted, var(--text-muted)); }
+.weather-night #location-display #change-location-button { color: var(--night-text-color, #e0e0e0); }
+.weather-night #location-display #change-location-button:hover, body.dark-mode #location-display #change-location-button:hover { color: var(--accent-color); }
+
+
+/* Responsive adjustments */
+/* ... remain unchanged ... */
+@media (max-width: 576px) { #prayer-times-container { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 0.8rem; } .prayer-time-item { padding: 1rem 0.5rem; border-radius: 8px; min-height: 100px; } .prayer-time-item i.fas { font-size: 1.6rem; } .prayer-name { font-size: 0.8rem; } .prayer-time { font-size: 1rem; } #next-prayer-info { font-size: 1rem; } #location-display { font-size: 0.85em; } }
+@media (max-width: 480px) { #prayer-times-section .location-error-overlay .search-container { max-width: 90%; } #prayer-times-section .location-error-overlay #manual-location-input { font-size: 0.85em; padding: 0.6rem 0.7rem;} #prayer-times-section .location-error-overlay #manual-location-button { padding: 0.6rem 0.8rem; } #location-suggestions button { padding: 0.7rem 0.9rem; font-size: 0.85em; } }
