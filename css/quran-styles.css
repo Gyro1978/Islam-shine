@@ -1,318 +1,178 @@
 /* --- Quran Page Specific Styles --- */
 
-body.page-quran {
-    /* Optional: Override body background if needed */
-    /* background-color: var(--background-color); */
+body.page-quran { /* ... */ }
+
+/* --- Scrollbar Styling --- */
+/* Works on Firefox */
+.quran-sidebar .surah-list,
+.quran-sidebar .ayah-list {
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: var(--accent-color) var(--background-color); /* thumb and track */
+}
+/* Works on Chrome, Edge, and Safari */
+.quran-sidebar .surah-list::-webkit-scrollbar,
+.quran-sidebar .ayah-list::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+.quran-sidebar .surah-list::-webkit-scrollbar-track,
+.quran-sidebar .ayah-list::-webkit-scrollbar-track {
+    background: var(--background-color); /* Track color */
+    border-radius: 4px;
+}
+.quran-sidebar .surah-list::-webkit-scrollbar-thumb,
+.quran-sidebar .ayah-list::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color); /* Thumb color */
+    border-radius: 4px;
+    border: 2px solid var(--background-color); /* Creates padding around thumb */
+}
+.quran-sidebar .surah-list::-webkit-scrollbar-thumb:hover,
+.quran-sidebar .ayah-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-darker-color); /* Thumb hover color */
 }
 
-/* Main layout using CSS Grid */
+
+/* Main layout using CSS Grid - MODIFIED for EQUAL sidebars */
 .main-quran {
     display: grid;
-    /* Define columns: Sidebar width, Content area takes remaining space */
-    grid-template-columns: minmax(250px, 1fr) 3fr; /* Adjust sidebar width as needed */
-    gap: 2rem; /* Gap between sidebar and content */
-    max-width: 1400px; /* Max overall width */
-    margin: 2rem auto; /* Centering and top/bottom margin */
-    padding: 0 1rem; /* Padding on the sides */
-    min-height: calc(100vh - var(--navbar-height) - 4rem); /* Try to fill height */
+    /* Define columns: Sidebar (fixed/minmax), Content (flexible), Sidebar (same as left) */
+    grid-template-columns: minmax(230px, 1fr) 3fr minmax(230px, 1fr); /* Equal sidebar constraints */
+    gap: 1.5rem;
+    max-width: 1600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    min-height: calc(100vh - var(--navbar-height) - 4rem);
 }
 
-/* --- Sidebar Styling --- */
+/* --- Sidebar Styling (Shared and Specific) --- */
 .quran-sidebar {
-    background-color: var(--section-bg-color); /* Use theme variable */
+    background-color: var(--section-bg-color);
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 1.2rem; /* Slightly reduced padding */
     border: 1px solid var(--border-color);
     box-shadow: var(--section-shadow);
-    height: fit-content; /* Adjust height based on content */
-    max-height: calc(100vh - var(--navbar-height) - 6rem); /* Max height with padding */
+    height: calc(100vh - var(--navbar-height) - 4rem); /* Make sidebar full height */
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column;
+    position: sticky;
+    top: calc(var(--navbar-height) + 1rem);
 }
 
-.quran-sidebar h2 {
-    font-size: 1.4em;
-    color: var(--heading-color);
-    margin-top: 0;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid var(--accent-color);
-    padding-bottom: 0.5rem;
-}
+.quran-sidebar h2 { /* ... styles unchanged ... */ font-size: 1.3em; color: var(--heading-color); margin-top: 0; margin-bottom: 1rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; text-align: center; }
 
-/* Surah Search */
-.search-surah-container {
-    display: flex;
-    margin-bottom: 1rem;
-    position: relative;
-}
-#surah-search {
-    flex-grow: 1;
-    padding: 0.6rem 2.5rem 0.6rem 0.8rem; /* Padding for text and clear button */
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background-color: var(--background-color); /* Match body bg */
-    color: var(--text-color);
-    font-size: 0.9em;
-    outline: none;
-    transition: border-color 0.2s;
-}
-#surah-search:focus {
-    border-color: var(--accent-color);
-}
-#clear-search {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 1.1em;
-    padding: 5px;
-    display: none; /* Hidden by default, shown by JS */
-    line-height: 1;
-}
-#clear-search:hover {
-    color: var(--text-color);
-}
-#surah-search:not(:placeholder-shown) + #clear-search {
-    display: block; /* Show clear button when input has text */
-}
-
+/* Left Sidebar (Surahs) */
+.quran-sidebar-left .search-surah-container { /* ... styles unchanged ... */ display: flex; margin-bottom: 1rem; position: relative; }
+.quran-sidebar-left #surah-search { /* ... styles unchanged ... */ flex-grow: 1; padding: 0.6rem 2.5rem 0.6rem 0.8rem; border: 1px solid var(--border-color); border-radius: 4px; background-color: var(--background-color); color: var(--text-color); font-size: 0.9em; outline: none; transition: border-color 0.2s; }
+.quran-sidebar-left #surah-search:focus { border-color: var(--accent-color); }
+.quran-sidebar-left #clear-search { /* ... styles unchanged ... */ position: absolute; right: 5px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1em; padding: 5px; display: none; line-height: 1; }
+.quran-sidebar-left #clear-search:hover { color: var(--text-color); }
+.quran-sidebar-left #surah-search:not(:placeholder-shown) + #clear-search { display: block; }
 
 /* Surah List Container */
-.surah-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    overflow-y: auto; /* Enable scrolling for the list */
-    flex-grow: 1; /* Allow list to take remaining space */
-}
-/* Style for individual surah links (added by JS) */
+.surah-list { /* ... styles unchanged ... */ list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+
+/* Surah list item link */
 .surah-list-item {
-    display: block;
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 5px;
-    color: var(--text-color);
-    text-decoration: none;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border: 1px solid transparent; /* Prepare for active state */
-    cursor: pointer; /* Indicate clickable */
+    display: block; padding: 0.7rem 0.9rem; margin-bottom: 0.3rem;
+    border-radius: 5px; color: var(--text-color); text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    border: 1px solid transparent; cursor: pointer;
 }
-.surah-list-item:hover {
-    background-color: var(--donate-bg-color); /* Use subtle highlight color */
-    color: var(--accent-color);
-}
-.surah-list-item.active {
-    background-color: var(--accent-color);
-    color: var(--dark-background-color, #121212); /* Dark text on light accent */
-    font-weight: 600;
-    border-color: var(--accent-darker-color);
-}
-body:not(.dark-mode) .surah-list-item.active {
-     color: #ffffff; /* White text on accent */
-}
+.surah-list-item:hover { background-color: var(--donate-bg-color); color: var(--accent-color); }
+.surah-list-item.active { /* ... styles unchanged ... */ background-color: var(--accent-color); color: var(--dark-background-color, #121212); font-weight: 600; border-color: var(--accent-darker-color); }
+body:not(.dark-mode) .surah-list-item.active { color: #ffffff; }
 
+/* Surah details inside link */
+.surah-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem; /* Add small gap */ }
+.surah-name-en { font-weight: 500; font-size: 0.9em; }
+.surah-name-ar { font-family: 'Amiri', serif; font-size: 1.1em; }
+.surah-number { /* ... styles unchanged ... */ font-size: 0.8em; color: var(--text-muted); background-color: var(--background-color); padding: 2px 6px; border-radius: 4px; margin-right: 5px; }
 
-/* Surah details (number, name, translation) inside the link */
-.surah-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.surah-name-en {
-    font-weight: 500;
-}
-.surah-name-ar {
-    font-family: 'Amiri', serif; /* Use Arabic font */
-    font-size: 1.2em; /* Slightly larger Arabic name */
-}
-.surah-number, .surah-verses {
+/* Ayah count - MODIFIED */
+.surah-verses {
     font-size: 0.8em;
     color: var(--text-muted);
     background-color: var(--background-color);
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-left: 5px; /* Space */
+    padding: 2px 8px; /* Adjust padding */
+    border-radius: 10px; /* Rounded corners */
+    display: inline-block; /* Don't take full width */
+    border: 1px solid var(--border-color); /* Optional subtle border */
 }
+
+/* Active state styling for number/verses */
 .surah-list-item.active .surah-number,
-.surah-list-item.active .surah-verses {
-     color: var(--accent-color); /* Match active text */
-     background-color: var(--dark-background-color, #121212); /* Match active bg */
-}
+.surah-list-item.active .surah-verses { /* ... styles unchanged ... */ color: var(--accent-color); background-color: var(--dark-background-color, #121212); }
 body:not(.dark-mode) .surah-list-item.active .surah-number,
-body:not(.dark-mode) .surah-list-item.active .surah-verses {
-     color: var(--accent-color);
-     background-color: #ffffff;
-}
+body:not(.dark-mode) .surah-list-item.active .surah-verses { color: var(--accent-color); background-color: #ffffff; }
 
 
 /* --- Content Area Styling --- */
-.quran-content {
-    background-color: var(--section-bg-color);
-    border-radius: 8px;
-    padding: 1.5rem 2rem; /* More horizontal padding */
-    border: 1px solid var(--border-color);
-    box-shadow: var(--section-shadow);
-    overflow-y: auto; /* Scroll content if needed */
-    max-height: calc(100vh - var(--navbar-height) - 6rem); /* Max height */
-}
+.quran-content-area { /* ... styles unchanged ... */ background-color: var(--section-bg-color); border-radius: 8px; padding: 1.5rem 2rem; border: 1px solid var(--border-color); box-shadow: var(--section-shadow); overflow-y: auto; }
 
-/* Placeholder styling */
-.quran-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 300px;
-    text-align: center;
-    color: var(--text-muted);
-}
-.quran-placeholder i {
-    font-size: 4em; /* Larger icon */
-    margin-bottom: 1rem;
-    color: var(--border-color); /* Muted icon color */
-}
-.quran-placeholder p {
-    font-size: 1.1em;
-}
+/* --- Audio Player --- */
+.quran-audio-controls { /* ... styles unchanged ... */ background-color: var(--background-color); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; position: sticky; top: 0; z-index: 10; }
+.quran-audio-controls button { /* ... styles unchanged ... */ background: var(--accent-color); color: var(--highlight-text); border: none; border-radius: 50%; width: 35px; height: 35px; font-size: 1rem; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; transition: background-color 0.2s ease; }
+.quran-audio-controls button:hover { background-color: var(--accent-darker-color); }
+.quran-audio-controls span { font-size: 0.9em; color: var(--text-muted); }
 
-
-/* Container for displaying Surah details */
-#surah-display-container {
-    /* Styles for Ayahs will be added here */
-}
-
-/* Surah Header (inside display container) */
-.surah-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
-}
-.surah-header h3 {
-    font-size: 1.8em;
-    color: var(--heading-color);
-    margin-bottom: 0.5rem;
-}
-.surah-header .arabic-name {
-    font-family: 'Amiri', serif;
-    font-size: 2.2em; /* Large Arabic name */
-    color: var(--accent-color);
-    margin-bottom: 0.5rem;
-}
-.surah-header .bismillah {
-    font-family: 'Amiri', serif;
-    font-size: 1.6em;
-    margin-top: 1rem;
-    color: var(--text-color);
-}
-.surah-header p {
-    font-size: 0.9em;
-    color: var(--text-muted);
-    margin-top: 0.5rem;
-}
+/* --- Surah Content Display --- */
+.quran-placeholder { /* ... styles unchanged ... */ display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; text-align: center; color: var(--text-muted); }
+.quran-placeholder i { font-size: 4em; margin-bottom: 1rem; color: var(--border-color); }
+.quran-placeholder p { font-size: 1.1em; }
+#surah-display-container { /* ... */ }
+.surah-header { /* ... styles unchanged ... */ text-align: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+.surah-header h3 { font-size: 1.8em; color: var(--heading-color); margin-bottom: 0.5rem; }
+.surah-header .arabic-name { font-family: 'Amiri', serif; font-size: 2.2em; color: var(--accent-color); margin-bottom: 0.5rem; }
+.surah-header .bismillah { font-family: 'Amiri', serif; font-size: 1.6em; margin-top: 1rem; color: var(--text-color); }
+.surah-header p { font-size: 0.9em; color: var(--text-muted); margin-top: 0.5rem; }
 
 /* Ayah (Verse) Styling */
-.ayah-container {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-    line-height: 1.8; /* Adjust line height for readability */
-}
-.ayah-container:last-child {
-     border-bottom: none;
-}
+.ayah-container { /* ... styles unchanged ... */ margin-bottom: 1.5rem; padding: 1rem; border-bottom: 1px solid var(--border-color); line-height: 1.8; transition: background-color 0.3s ease; scroll-margin-top: 80px; }
+.ayah-container:last-child { border-bottom: none; }
 
-.ayah-number {
-    font-weight: bold;
-    color: var(--accent-color);
-    margin-right: 0.5em;
-    background-color: var(--donate-bg-color); /* Subtle background */
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.9em;
-}
+/* Highlight currently active/scrolled ayah */
+.ayah-container.active-ayah { /* ... styles unchanged ... */ background-color: var(--donate-bg-color); border-left: 3px solid var(--accent-color); padding-left: calc(1rem - 3px); }
 
-.ayah-text-ar {
-    font-family: 'Amiri', serif; /* Arabic font */
-    font-size: 1.8em; /* Larger Arabic text */
-    line-height: 2;   /* More line spacing for Arabic */
-    text-align: right; /* Right-align Arabic */
-    margin-bottom: 0.5rem;
-    direction: rtl; /* Right-to-left direction */
-    color: var(--text-color);
-}
-
-.ayah-text-en {
-    font-size: 1.1em;
-    margin-top: 0.5rem;
-    color: var(--text-muted);
-    font-style: italic;
-}
-
-/* Loading/Error text */
-.loading-text, .error-text {
-    color: var(--text-muted);
-    text-align: center;
-    padding: 1rem;
-}
-.error-text {
-    color: #ff4d4d; /* Red for errors */
+/* Style for highlighting the word currently being read (needs JS + timing API) */
+.ayah-text-ar .highlight-word {
+    background-color: var(--accent-color);
+    color: var(--highlight-text);
+    padding: 0 2px;
+    border-radius: 2px;
+    transition: background-color 0.1s ease, color 0.1s ease;
 }
 
 
-/* --- Optional Controls --- */
-.quran-controls {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-    display: flex; /* Initially hidden by inline style */
-    gap: 1rem;
-    align-items: center;
-}
-.quran-controls label {
-    font-weight: 500;
-}
-.quran-controls select {
-    padding: 0.5rem;
-    border-radius: 4px;
-    border: 1px solid var(--border-color);
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
+.ayah-number { /* ... styles unchanged ... */ font-weight: bold; color: var(--accent-color); margin-right: 0.5em; background-color: var(--donate-bg-color); padding: 2px 8px; border-radius: 4px; font-size: 0.9em; }
+.ayah-text-ar { font-family: 'Amiri', serif; font-size: 1.8em; line-height: 2; text-align: right; margin-bottom: 0.5rem; direction: rtl; color: var(--text-color); }
+.ayah-text-en { font-size: 1.1em; margin-top: 0.5rem; color: var(--text-muted); font-style: italic; }
+.loading-text, .error-text { /* ... styles unchanged ... */ color: var(--text-muted); text-align: center; padding: 1rem; }
+.error-text { color: #ff4d4d; }
 
+/* --- Surah Navigation Buttons --- */
+#surah-navigation-buttons { /* ... styles unchanged ... */ display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+.surah-nav-button { /* ... styles unchanged ... */ display: inline-flex; align-items: center; gap: 0.5em; padding: 0.7rem 1.4rem; background-color: var(--accent-color); color: #ffffff; text-decoration: none; font-weight: 500; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease; }
+body.dark-mode .surah-nav-button { color: var(--dark-background-color); }
+.surah-nav-button i { font-size: 0.9em; }
+.surah-nav-button:hover { background-color: var(--accent-darker-color); }
+.surah-nav-button:active { transform: scale(0.98); }
+.surah-nav-button:disabled { background-color: var(--text-muted); cursor: not-allowed; transform: none; }
+
+/* --- Right Sidebar (Ayahs) --- */
+.quran-sidebar-right { /* Inherits base */ }
+.ayah-list { /* ... styles unchanged ... */ list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+.ayah-list-item { /* ... styles unchanged ... */ display: block; padding: 0.5rem 0.8rem; margin-bottom: 0.2rem; border-radius: 4px; color: var(--text-muted); text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; border: 1px solid transparent; cursor: pointer; font-size: 0.9em; text-align: center; }
+.ayah-list-item:hover { background-color: var(--donate-bg-color); color: var(--accent-color); }
+.ayah-list-item.active { /* ... styles unchanged ... */ background-color: var(--accent-color); color: var(--dark-background-color, #121212); font-weight: 600; border-color: var(--accent-darker-color); }
+body:not(.dark-mode) .ayah-list-item.active { color: #ffffff; }
 
 /* --- Responsive Adjustments --- */
-@media (max-width: 992px) {
-    .main-quran {
-        grid-template-columns: minmax(200px, 1fr) 3fr; /* Narrower sidebar */
-        gap: 1.5rem;
+@media (max-width: 1200px) {
+     .main-quran {
+        /* Adjust sidebar width if needed, keeping them equal */
+        grid-template-columns: minmax(200px, 1fr) 3fr minmax(200px, 1fr);
+        gap: 1rem;
     }
 }
-
-@media (max-width: 768px) {
-    .main-quran {
-        grid-template-columns: 1fr; /* Stack sidebar and content */
-        margin-top: 1rem;
-    }
-    .quran-sidebar {
-        max-height: 300px; /* Limit sidebar height when stacked */
-        margin-bottom: 1rem; /* Add space below sidebar */
-    }
-    .quran-content {
-        max-height: none; /* Remove max height for content */
-        padding: 1rem 1.5rem;
-    }
-    .ayah-text-ar { font-size: 1.6em; }
-    .ayah-text-en { font-size: 1em; }
-}
-@media (max-width: 480px) {
-    .surah-list-item { padding: 0.6rem 0.8rem; }
-    .surah-name-ar { font-size: 1.1em; }
-    .ayah-text-ar { font-size: 1.4em; }
-    .surah-header .arabic-name { font-size: 1.8em; }
-    .surah-header .bismillah { font-size: 1.4em; }
-}
+@media (max-width: 992px) { /* ... unchanged ... */ .main-quran { grid-template-columns: minmax(200px, 1fr) 3fr; gap: 1.5rem; } .quran-sidebar-right { display: none; } .quran-content-area { padding: 1rem 1.5rem; } }
+@media (max-width: 768px) { /* ... unchanged ... */ .main-quran { grid-template-columns: 1fr; margin-top: 1rem; } .quran-sidebar { max-height: 300px; margin-bottom: 1rem; position: static; } .quran-sidebar-right { display: none; } .quran-content-area { max-height: none; padding: 1rem 1.5rem; } .ayah-text-ar { font-size: 1.6em; } .ayah-text-en { font-size: 1em; } .quran-audio-controls { position: static; margin-bottom: 1rem; } }
+@media (max-width: 480px) { /* ... unchanged ... */ .surah-list-item { padding: 0.6rem 0.8rem; } .surah-name-ar { font-size: 1.1em; } .ayah-text-ar { font-size: 1.4em; } .surah-header .arabic-name { font-size: 1.8em; } .surah-header .bismillah { font-size: 1.4em; } .surah-nav-button { padding: 0.6rem 1rem; font-size: 0.9em; } .quran-audio-controls { gap: 0.5rem; padding: 0.5rem 0.75rem; } .quran-audio-controls span { display: none; } }

@@ -6,7 +6,7 @@
 
     <title>The Holy Quran - Islam Shine</title>
     <meta name="description" content="Read and explore the Holy Quran online. Access Surahs, Ayahs, and translations.">
-    <meta name="keywords" content="quran, holy quran, read quran, islam, muslim, surah, ayah, translation">
+    <meta name="keywords" content="quran, holy quran, read quran, islam, muslim, surah, ayah, translation, audio quran">
 
     <!-- Favicon -->
     <link rel="icon" href="/assets/images/Islam-shine-logo.png.png" type="image/png">
@@ -15,9 +15,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Consider adding an Arabic font like Amiri -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
 
@@ -25,9 +22,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- CSS Links -->
-    <link rel="stylesheet" href="css/style.css">    <!-- General styles -->
-    <link rel="stylesheet" href="css/navbar.css">   <!-- Navbar styles -->
-    <link rel="stylesheet" href="css/quran-styles.css"> <!-- Specific Quran styles (Create this next) -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/quran-styles.css"> <!-- Specific Quran styles -->
     <meta name="google-adsense-account" content="ca-pub-8839663991354998">
 
 </head>
@@ -43,36 +40,47 @@
     <main class="main-quran">
 
         <!-- Left Sidebar for Surah Navigation -->
-        <aside class="quran-sidebar">
-            <h2>Surahs (Chapters)</h2>
+        <aside class="quran-sidebar quran-sidebar-left">
+            <h2>Surahs</h2>
             <div class="search-surah-container">
                  <input type="search" id="surah-search" placeholder="Search Surahs...">
                  <button id="clear-search" aria-label="Clear search"><i class="fas fa-times"></i></button>
             </div>
             <div id="surah-list-container" class="surah-list">
-                <!-- Surah links will be loaded here by JS -->
+                <!-- Surah links loaded by JS -->
                 <p class="loading-text">Loading Surahs...</p>
             </div>
         </aside>
 
         <!-- Main Content Area for Displaying Surah -->
-        <section class="quran-content">
+        <section class="quran-content-area">
+            <!-- Audio Player Controls (Basic Structure) -->
+            <div id="quran-audio-player" class="quran-audio-controls" style="display: none;"> <!-- Hidden until Surah loaded -->
+                 <button id="audio-play-pause" aria-label="Play/Pause"><i class="fas fa-play"></i></button>
+                 <span id="audio-current-surah">Surah: -</span>
+                 <span id="audio-current-ayah">Ayah: -</span>
+                 <!-- Add more controls like volume, progress bar later if needed -->
+                 <audio id="quran-audio-element" preload="metadata"></audio> <!-- Hidden audio element -->
+            </div>
+
+            <!-- Container for Surah Text -->
             <div id="surah-display-container">
                 <!-- Selected Surah content will be loaded here -->
-                <div class="quran-placeholder">
-                    <i class="fas fa-book-quran fa-3x"></i>
-                    <p>Select a Surah from the list to start reading.</p>
-                </div>
+                 <p class="loading-text">Loading Quran...</p> <!-- Initial message -->
             </div>
-             <!-- Optional: Add controls for font size, translation selection etc. -->
-             <div class="quran-controls" style="display: none;"> {/* Hide initially */}
-                <label for="translation-select">Translation:</label>
-                <select id="translation-select">
-                    <!-- Translation options populated by JS -->
-                </select>
-                {/* Add font size controls, etc. */}
-             </div>
+             <!-- "Next Surah" button container (added by JS) -->
+            <div id="surah-navigation-buttons"></div>
+
         </section>
+
+        <!-- Right Sidebar for Ayah Navigation -->
+        <aside class="quran-sidebar quran-sidebar-right">
+             <h2>Ayahs</h2>
+             <div id="ayah-list-container" class="ayah-list">
+                 <!-- Ayah links loaded by JS when Surah is displayed -->
+                 <p class="loading-text">Select a Surah</p>
+             </div>
+        </aside>
 
     </main>
 
@@ -81,7 +89,7 @@
     <!-- JavaScript Links -->
     <script src="js/main.js" defer></script>
     <script src="js/navbar.js" defer></script>
-    <script src="js/quran.js" defer></script> <!-- New JS file for Quran functionality -->
+    <script src="js/quran.js" defer></script> <!-- Handles Quran functionality -->
 
 </body>
 </html>

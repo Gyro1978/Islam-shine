@@ -6,7 +6,7 @@
 
     <title>Islam Shine - Accurate Islamic Resources</title>
     <meta name="description" content="Your source for accurate Islamic prayer times, Quran resources, Ahadith, and community support.">
-    <meta name="keywords" content="islam, muslim, prayer times, quran, ahadith, hadith, islamic resources, accurate prayer times">
+    <meta name="keywords" content="islam, muslim, prayer times, quran, ahadith, hadith, islamic resources, accurate prayer times, zakat, duas, qibla, calendar, news">
 
     <link rel="icon" href="/assets/images/Islam-shine-logo.png.png" type="image/png">
 
@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/dynamic-styles.css"> <!-- Styles Prayer Times section -->
-    <link rel="stylesheet" href="css/ahadith-styles.css"> <!-- Styles Ahadith section -->
     <meta name="google-adsense-account" content="ca-pub-8839663991354998">
 
 </head>
@@ -43,26 +42,83 @@
 
         <!-- Prayer Times Section -->
         <section id="prayer-times-section" class="weather-dynamic-bg">
+            <!-- Location will be prepended here by JS -->
             <h2>Prayer Times</h2>
             <div id="prayer-times-container">
                 <p class="loading-text">Loading prayer times...</p>
             </div>
-            <div id="next-prayer-info"></div>
+            <div id="next-prayer-info"></div> <!-- Countdown -->
         </section>
 
-        <!-- Ahadith Section - ADDED -->
-        <section id="ahadith">
-            <h2>Ahadith (Sayings & Actions of the Prophet ﷺ)</h2>
-            <div class="ahadith-container">
-                <div id="hadith-display" class="hadith-content">
-                    <!-- Hadith content will be loaded here by JS -->
-                    <p class="loading-text">Loading Hadith...</p>
-                </div>
-                <div class="hadith-controls">
-                    <button id="random-hadith-button" class="button-style">
-                        <i class="fas fa-random"></i> Random Hadith
-                    </button>
-                </div>
+        <!-- News Slider Section - ADDED -->
+        <section id="news-slider">
+            <h2>Latest News & Updates</h2>
+            <div class="news-slider-container">
+                <!-- Placeholder Slides -->
+                <article class="news-slide">
+                    <img src="assets/images/placeholder-news.png" alt="News Image 1">
+                    <h3><a href="#">Important Announcement Regarding Community Event</a></h3>
+                    <p>Details about the upcoming event have been finalized...</p>
+                    <span class="news-date">June 15, 2024</span>
+                </article>
+                <article class="news-slide">
+                     <img src="assets/images/placeholder-news.png" alt="News Image 2">
+                    <h3><a href="#">New Educational Series Starting Soon</a></h3>
+                    <p>Join us for a new series focusing on Islamic history...</p>
+                     <span class="news-date">June 14, 2024</span>
+                </article>
+                <article class="news-slide">
+                     <img src="assets/images/placeholder-news.png" alt="News Image 3">
+                    <h3><a href="#">Volunteer Opportunities Available</a></h3>
+                    <p>We are looking for volunteers to help with various activities...</p>
+                     <span class="news-date">June 12, 2024</span>
+                </article>
+                <!-- Add more slides as needed -->
+            </div>
+            <!-- Optional: Add slider controls (dots/arrows) here -->
+        </section>
+
+
+        <!-- Islamic Tools Section -->
+        <section id="islamic-tools">
+            <h2>Islamic Tools & Resources</h2>
+            <div class="tools-grid">
+                <a href="#" class="tool-item">
+                    <i class="fas fa-calculator"></i>
+                    <span>Zakat Calculator</span>
+                </a>
+                <a href="#" class="tool-item">
+                    <i class="fas fa-hands-praying"></i>
+                    <span>Duas</span>
+                </a>
+                <a href="#" class="tool-item">
+                    <i class="fas fa-book-open"></i>
+                    <span>Hadith</span>
+                </a>
+                 <a href="#" class="tool-item"> <!-- ADDED News Tool -->
+                    <i class="fas fa-newspaper"></i>
+                    <span>News</span>
+                </a>
+                <a href="#" class="tool-item">
+                    <i class="fas fa-star-and-crescent"></i>
+                    <span>Special Days</span>
+                </a>
+                <a href="#" class="tool-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendar</span>
+                </a>
+                <a href="#" class="tool-item">
+                    <i class="fas fa-compass"></i>
+                    <span>Qibla Direction</span>
+                </a>
+                <a href="#" class="tool-item">
+                    <i class="fas fa-mosque"></i>
+                    <span>Nearby Mosques</span>
+                </a>
+                 <a href="quran.html" class="tool-item">
+                    <i class="fas fa-book-quran"></i>
+                    <span>Quran</span>
+                </a>
             </div>
         </section>
 
@@ -78,7 +134,7 @@
     <script src="js/main.js" defer></script>
     <script src="js/navbar.js" defer></script>
     <script src="js/features.js" defer></script> <!-- For Prayer Times -->
-    <script src="js/ahadith.js" defer></script> <!-- For Ahadith -->
+    <!-- Consider adding a news-slider.js if you want functionality -->
 
 </body>
 </html>
